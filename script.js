@@ -1,37 +1,21 @@
-//your JS code here. If required.
-document.addEventListener("DOMContentLoaded", function () {
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const checkbox = document.getElementById("checkbox");
-    const submitButton = document.getElementById("submit");
-    const existingButton = document.getElementById("existing");
+function createTable() {
+    let rn = window.prompt("Input number of rows");
+    if (rn === null || rn.trim() === "" || isNaN(rn) || Number(rn) <= 0) return;
 
-    // Check if credentials are saved in localStorage
-    if (localStorage.getItem("username") && localStorage.getItem("password")) {
-        existingButton.style.display = "block";
-    }
+    let cn = window.prompt("Input number of columns");
+    if (cn === null || cn.trim() === "" || isNaN(cn) || Number(cn) <= 0) return;
 
-    // Handle form submission
-    document.getElementById("loginForm").addEventListener("submit", function (event) {
-        event.preventDefault();
+    rn = Number(rn);
+    cn = Number(cn);
+    
+    let table = document.getElementById("myTable");
+    table.innerHTML = "";
 
-        const username = usernameInput.value;
-        const password = passwordInput.value;
-
-        alert("Logged in as " + username);
-
-        if (checkbox.checked) {
-            localStorage.setItem("username", username);
-            localStorage.setItem("password", password);
-        } else {
-            localStorage.removeItem("username");
-            localStorage.removeItem("password");
+    for (let i = 0; i < rn; i++) {
+        let row = table.insertRow();
+        for (let j = 0; j < cn; j++) {
+            let cell = row.insertCell();
+            cell.textContent = `Row-${i} Column-${j}`;
         }
-    });
-
-    // Handle existing user login
-    existingButton.addEventListener("click", function () {
-        const savedUsername = localStorage.getItem("username");
-        alert("Logged in as " + savedUsername);
-    });
-});
+    }
+}
