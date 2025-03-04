@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-
-<html>
-
-	<head>
-		<meta charset=utf-8 /> 
-		<title>Create a table</title> 
-		<style type="text/css"> 
-			body {margin: 30px;} 	
-		</style>
-		<link rel="stylesheet" href="styles.css">
-	</head>
-
-	<body>
-		<h1>Login Form</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+    <h1>Login Form</h1>
     <form id="loginForm">
         <label for="username">Username:</label>
         <input type="text" id="username" placeholder="Username" required>
@@ -26,9 +20,47 @@
         <button type="submit" id="submit">Submit</button>
     </form>
     <button id="existing" style="display: none;">Login as existing user</button>
-		<script type="text/javascript" src="./script.js">
-	</script>
 
-	</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const usernameInput = document.getElementById("username");
+            const passwordInput = document.getElementById("password");
+            const rememberMeCheckbox = document.getElementById("checkbox");
+            const existingUserButton = document.getElementById("existing");
+            const loginForm = document.getElementById("loginForm");
 
+            // Check if credentials exist in localStorage
+            const savedUsername = localStorage.getItem("username");
+            const savedPassword = localStorage.getItem("password");
+
+            if (savedUsername && savedPassword) {
+                existingUserButton.style.display = "block";
+            }
+
+            // Handle form submission
+            loginForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                alert("Logged in as " + username);
+
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("password", password);
+                    existingUserButton.style.display = "block";
+                } else {
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("password");
+                    existingUserButton.style.display = "none";
+                }
+            });
+
+            // Handle login as existing user
+            existingUserButton.addEventListener("click", function () {
+                alert("Logged in as " + localStorage.getItem("username"));
+            });
+        });
+    </script>
+</body>
 </html>
