@@ -15,7 +15,7 @@ function createTable() {
         let row = table.insertRow();
         for (let j = 0; j < cn; j++) {
             let cell = row.insertCell();
-            cell.textContent = `Row-${i} Column-${j}`;
+            cell.textContent = (`Row-${i} Column-${j}`);
         }
     }
 }
