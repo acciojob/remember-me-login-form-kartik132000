@@ -1,21 +1,39 @@
-function createTable() {
-    let rn = window.prompt("Input number of rows");
-    if (rn === null || rn.trim() === "" || isNaN(rn) || Number(rn) <= 0) return;
+document.addEventListener("DOMContentLoaded", function () {
+            const usernameInput = document.getElementById("username");
+            const passwordInput = document.getElementById("password");
+            const rememberMeCheckbox = document.getElementById("checkbox");
+            const existingUserButton = document.getElementById("existing");
+            const loginForm = document.getElementById("loginForm");
 
-    let cn = window.prompt("Input number of columns");
-    if (cn === null || cn.trim() === "" || isNaN(cn) || Number(cn) <= 0) return;
+            // Check if credentials exist in localStorage
+            const savedUsername = localStorage.getItem("username");
+            const savedPassword = localStorage.getItem("password");
 
-    rn = Number(rn);
-    cn = Number(cn);
-    
-    let table = document.getElementById("myTable");
-    table.innerHTML = "";
+            if (savedUsername && savedPassword) {
+                existingUserButton.style.display = "block";
+            }
 
-    for (let i = 0; i < rn; i++) {
-        let row = table.insertRow();
-        for (let j = 0; j < cn; j++) {
-            let cell = row.insertCell();
-            cell.textContent = (`Row-${i} Column-${j}`);
-        }
-    }
-}
+            // Handle form submission
+            loginForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                alert("Logged in as " + username);
+
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("password", password);
+                    existingUserButton.style.display = "block";
+                } else {
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("password");
+                    existingUserButton.style.display = "none";
+                }
+            });
+
+            // Handle login as existing user
+            existingUserButton.addEventListener("click", function () {
+                alert("Logged in as " + localStorage.getItem("username"));
+            });
+        });
